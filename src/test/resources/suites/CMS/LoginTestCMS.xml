@@ -4,6 +4,7 @@
 
     <listeners>
         <listener class-name="com.anhtester.listeners.AnnotationTransformer"/>
+         <listener class-name="com.anhtester.listeners.TestListener"/>
     </listeners>
 
     <test name="Login Test CMS" parallel="methods">
