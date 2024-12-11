@@ -1,8 +1,3 @@
-/*
- * Copyright (c) 2022.
- * Automation Framework Selenium - Anh Tester
- */
-
 package com.anhtester.driver;
 
 import com.anhtester.constants.FrameworkConstants;
@@ -21,15 +16,11 @@ import org.openqa.selenium.safari.SafariOptions;
 import java.util.HashMap;
 import java.util.Map;
 
-import static java.lang.Boolean.TRUE;
-
 public enum BrowserFactory {
 
     CHROME {
         @Override
         public WebDriver createDriver() {
-            //WebDriverManager.getInstance(DriverManagerType.CHROME).setup();
-
             return new ChromeDriver(getOptions());
         }
 
@@ -48,23 +39,20 @@ public enum BrowserFactory {
             options.addArguments("--disable-notifications");
             options.addArguments("--remote-allow-origins=*");
 
-            options.setAcceptInsecureCerts(true);
+            // Enforce headless mode for Chrome
+            options.addArguments("--headless=new");
+            options.addArguments("--disable-gpu");
+            options.addArguments("--no-sandbox");
+            options.addArguments("--disable-dev-shm-usage");
+            options.addArguments("--window-size=1880,1000");
 
-            if (Boolean.valueOf(FrameworkConstants.HEADLESS) == true) {
-                options.addArguments("--headless=new");
-                options.addArguments("--disable-gpu");
-                options.addArguments("--no-sandbox");
-                options.addArguments("--disable-dev-shm-usage");
-                options.addArguments("--window-size=1880,1000");
-            }
+            options.setAcceptInsecureCerts(true);
 
             return options;
         }
     }, EDGE {
         @Override
         public WebDriver createDriver() {
-            //WebDriverManager.getInstance(DriverManagerType.EDGE).setup();
-
             return new EdgeDriver(getOptions());
         }
 
@@ -83,23 +71,20 @@ public enum BrowserFactory {
             options.addArguments("--disable-notifications");
             options.addArguments("--remote-allow-origins=*");
 
-            options.setAcceptInsecureCerts(true);
+            // Enforce headless mode for Edge
+            options.addArguments("--headless=new");
+            options.addArguments("--disable-gpu");
+            options.addArguments("--no-sandbox");
+            options.addArguments("--disable-dev-shm-usage");
+            options.addArguments("--window-size=1880,1000");
 
-            if (Boolean.valueOf(FrameworkConstants.HEADLESS) == true) {
-                options.addArguments("--headless=new");
-                options.addArguments("--disable-gpu");
-                options.addArguments("--no-sandbox");
-                options.addArguments("--disable-dev-shm-usage");
-                options.addArguments("--window-size=1880,1000");
-            }
+            options.setAcceptInsecureCerts(true);
 
             return options;
         }
     }, FIREFOX {
         @Override
         public WebDriver createDriver() {
-            //WebDriverManager.getInstance(DriverManagerType.FIREFOX).setup();
-
             return new FirefoxDriver(getOptions());
         }
 
@@ -109,19 +94,16 @@ public enum BrowserFactory {
 
             options.setAcceptInsecureCerts(true);
 
-            if (Boolean.valueOf(FrameworkConstants.HEADLESS) == true) {
-                options.addArguments("-headless");
-                options.addArguments("--width=1920");
-                options.addArguments("--height=1080");
-            }
+            // Enforce headless mode for Firefox
+            options.addArguments("-headless");
+            options.addArguments("--width=1920");
+            options.addArguments("--height=1080");
 
             return options;
         }
     }, SAFARI {
         @Override
         public WebDriver createDriver() {
-            //WebDriverManager.getInstance(DriverManagerType.SAFARI).setup();
-
             return new SafariDriver(getOptions());
         }
 
@@ -130,14 +112,10 @@ public enum BrowserFactory {
             SafariOptions options = new SafariOptions();
             options.setAutomaticInspection(false);
 
-            if (TRUE.equals(Boolean.valueOf(FrameworkConstants.HEADLESS)))
-                throw new HeadlessNotSupportedException(options.getBrowserName());
-
-            return options;
+            // Safari does not support headless mode, so it throws an exception
+            throw new HeadlessNotSupportedException(options.getBrowserName());
         }
     };
-
-    private static final String START_MAXIMIZED = "--start-maximized";
 
     public abstract WebDriver createDriver();
 
