@@ -440,22 +440,19 @@
                 </plugin>
 
                 <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <version>${maven-surefire-plugin.version}</version>
-                    <configuration>
-                        <suiteXmlFiles>
-                            <!--<suiteXmlFile>${suite.all}</suiteXmlFile>-->
-                            <suiteXmlFile>src/test/resources/suites/CMS/LoginTestCMS.xml</suiteXmlFile>
-                        </suiteXmlFiles>
-                        <argLine>
-                            -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectjweaver.version}/aspectjweaver-${aspectjweaver.version}.jar"
-                        </argLine>
-                        <testFailureIgnore>${maven.test.failure.ignore}</testFailureIgnore>
-                        <systemPropertyVariables>
-                            <allure.results.directory>target/allure-results</allure.results.directory>
-                        </systemPropertyVariables>
-                    </configuration>
+                      <groupId>org.apache.maven.plugins</groupId>
+                      <artifactId>maven-surefire-plugin</artifactId>
+                      <version>3.5.2</version>
+                      <configuration>
+                          <suiteXmlFiles>
+                              <suiteXmlFile>src/test/resources/suites/CMS/LoginTestCMS.xml</suiteXmlFile>
+                          </suiteXmlFiles>
+                          <!-- Remove or comment out the argLine for testing -->
+                          <!-- <argLine>
+                              -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectjweaver.version}/aspectjweaver-${aspectjweaver.version}.jar"
+                          </argLine> -->
+                          <!-- Temporarily remove testFailureIgnore and systemPropertyVariables for debugging -->
+                      </configuration>
                 </plugin>
 
                 <plugin>
